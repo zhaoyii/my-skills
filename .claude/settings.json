@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "defaultMode": "auto",
+    "defaultMode": "default",
 
     "allow": [
       "Bash(git *)",
