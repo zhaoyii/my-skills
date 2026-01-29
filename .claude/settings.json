@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "defaultMode": "auto",
+
+    "allow": [
+      "Bash(git *)",
+      "Bash(pnpm run dev)",
+      "Bash(curl *)",
+
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)"
+    ],
+
+    "deny": ["Read(.env)", "Read(.env.*)", "Read(**/.env)", "Read(**/.env.*)"]
+  },
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[Claude] executing bash command'"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[Claude] about to edit a file'"
+          }
+        ]
+      }
+    ]
+  },
+  
+  "env": {
+    "DISABLE_TELEMETRY": "1"
+  },
+
+  "showTurnDuration": true
+}
+

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "defaultMode": "dontAsk",
+    "deny": [],
+    "ask": [],
+    "allow": [
+      "Bash(git add:*)"
+    ]
+  }
+}
