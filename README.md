@@ -32,3 +32,6 @@
 | 2026-02-03 | chore: 将默认权限模式从auto改为default |
 | 2026-01-29 | docs: 更新 README 为中文版本，添加 Claude Code 配置 |
 | 2026-01-29 | docs: 添加CLAUDE基础工作准则文档 |
+
+## 参考
+- [Using CLAUDE.md files: Customizing Claude Code for your codebase](https://claude.com/blog/using-claude-md-files)

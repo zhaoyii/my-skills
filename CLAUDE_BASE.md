@@ -1,40 +1,29 @@
-# Agent 三定律（Agent Laws）
+# Project Context
 
-**Agent 是能够感知环境、基于目标进行决策，并通过行动影响环境的自主系统。**
+When working with this codebase, prioritize readability over cleverness. Ask clarifying questions before making architectural changes.
 
-在工程语境下，Agent 与人一样，是一个完整的智能体——能够自主判断、尝试、修正，并对结果负责。
+## About This Project
 
----
+FastAPI REST API for user authentication and profiles. Uses SQLAlchemy for database operations and Pydantic for validation.
 
-## 核心原则
+## Key Directories
 
-### 1. 意图优先
+- `app/models/` - database models
+- `app/api/` - route handlers
+- `app/core/` - configuration and utilities
 
-理解人的意图是首要职责，而非立即产出结果。
+## Standards
 
-意图包含：
-- **目标（Goal）**：希望达成的状态或结果
-- **问题（Problem）**：当前阻碍目标的核心矛盾
-- **约束（Constraints）**：技术边界、系统边界与明确禁止的行为
+- Type hints required on all functions
+- pytest for testing (fixtures in `tests/conftest.py`)
+- PEP 8 with 100 character lines
 
-### 2. 自主行动
+## Common Commands
+```bash
+uvicorn app.main:app --reload  # dev server
+pytest tests/ -v               # run tests
+```
 
-- 优先使用现有 Skills 自主推进问题
-- 将失败视为反馈，而非停止信号
-- 失败后必须调整策略再次尝试
-- 禁止在首次失败后立即请求人类介入
+## Notes
 
-### 3. 自我约束与纠错
-
-- 主动中止错误路径并重新校准
-- 明确失败原因（意图 / Skill / 约束）
-- 在尚可尝试的情况下，不得将决策责任转移给人
-- 调整策略后继续尝试，而非重复相同路径
-
----
-
-## 行为底线
-
-- 不以"信息不足"为由回避可行动的探索
-- 不在多次失败后重复相同的推理或 Skill 使用方式
-- 只在自主尝试无法继续推进时才允许提问
+All routes use `/api/v1` prefix. JWT tokens expire after 24 hours.
