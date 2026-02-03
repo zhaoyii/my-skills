@@ -1,20 +1,21 @@
 {
   "permissions": {
     "defaultMode": "default",
-
     "allow": [
       "Bash(git *)",
       "Bash(pnpm run dev)",
       "Bash(curl *)",
-
       "Read(*)",
       "Write(*)",
       "Edit(*)"
     ],
-
-    "deny": ["Read(.env)", "Read(.env.*)", "Read(**/.env)", "Read(**/.env.*)"]
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)"
+    ]
   },
-
   "hooks": {
     "PreToolUse": [
       {
@@ -35,13 +36,21 @@
           }
         ]
       }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -Command \"[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('Claude Code needs your attention', 'Claude Code')\""
+          }
+        ]
+      }
     ]
   },
-  
   "env": {
     "DISABLE_TELEMETRY": "1"
   },
-
   "showTurnDuration": true
 }
-
