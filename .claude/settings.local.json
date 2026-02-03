@@ -7,5 +7,29 @@
     "deny": [],
     "ask": [],
     "defaultMode": "dontAsk"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -Command \"Write-Host '[PreToolUse] running command...'\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -Command \"Write-Host '[PostToolUse] done'\""
+          }
+        ]
+      }
+    ]
   }
 }

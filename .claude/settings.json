@@ -17,26 +17,6 @@
     ]
   },
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '[Claude] executing bash command'"
-          }
-        ]
-      },
-      {
-        "matcher": "Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '[Claude] about to edit a file'"
-          }
-        ]
-      }
-    ],
     "Notification": [
       {
         "matcher": "",
