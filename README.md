@@ -41,3 +41,4 @@
 - [Claude Code settings](https://code.claude.com/docs/en/settings)
   - [settings.json 配置](https://code.claude.com/docs/en/settings#settings-files)
   - [Subagent configuration](https://code.claude.com/docs/en/settings#subagent-configuration)
+- [Claude Code skills](https://code.claude.com/docs/en/skills)
