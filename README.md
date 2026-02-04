@@ -48,3 +48,5 @@ claude mcp add -s user MiniMax --env MINIMAX_API_KEY=api_key --env MINIMAX_API_H
   - [settings.json 配置](https://code.claude.com/docs/en/settings#settings-files)
   - [Subagent configuration](https://code.claude.com/docs/en/settings#subagent-configuration)
 - [Claude Code skills](https://code.claude.com/docs/en/skills)
+- [通过 MCP 将 Claude 与工具连接起来](https://code.claude.com/docs/en/mcp)
+- [Minimax 的 Coding Plan MCP：web_search 和 understand_image](https://platform.minimaxi.com/docs/guides/coding-plan-mcp-guide#web-search)
