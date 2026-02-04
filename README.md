@@ -33,6 +33,12 @@
 | 2026-01-29 | docs: 更新 README 为中文版本，添加 Claude Code 配置 |
 | 2026-01-29 | docs: 添加CLAUDE基础工作准则文档 |
 
+## mcp 安装
+**目前最稳妥的方式是通过 CLI 安装。**
+```
+claude mcp add -s user MiniMax --env MINIMAX_API_KEY=api_key --env MINIMAX_API_HOST=https://api.minimaxi.com -- uvx minimax-coding-plan-mcp -y
+```
+
 ## Claude Code 配置参考
 - [Using CLAUDE.md files: Customizing Claude Code for your codebase](https://claude.com/blog/using-claude-md-files)
 - [系统提示词（System prompt）](https://code.claude.com/docs/en/settings#system-prompt)
