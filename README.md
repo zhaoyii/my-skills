@@ -33,5 +33,11 @@
 | 2026-01-29 | docs: 更新 README 为中文版本，添加 Claude Code 配置 |
 | 2026-01-29 | docs: 添加CLAUDE基础工作准则文档 |
 
-## 参考
+## Claude Code 配置参考
 - [Using CLAUDE.md files: Customizing Claude Code for your codebase](https://claude.com/blog/using-claude-md-files)
+- [系统提示词（System prompt）](https://code.claude.com/docs/en/settings#system-prompt)
+- [命令行参数（CLI flags）](https://code.claude.com/docs/en/cli-reference#cli-flags)
+- [CLAUDE.md configuration 是什么](https://code.claude.com/docs/en/gitlab-ci-cd#claude-md-configuration)
+- [Claude Code settings](https://code.claude.com/docs/en/settings)
+  - [settings.json 配置](https://code.claude.com/docs/en/settings#settings-files)
+  - [Subagent configuration](https://code.claude.com/docs/en/settings#subagent-configuration)
