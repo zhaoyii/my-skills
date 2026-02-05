@@ -38,3 +38,7 @@ claude --version
 ```
 
 成功安装后应显示版本号。首次运行会自动打开浏览器进行登录认证。
+
+## 参考
+- [Advanced installation: Set up Claude Code](https://code.claude.com/docs/en/setup)
+- [Quickstart](https://code.claude.com/docs/en/quickstart)
