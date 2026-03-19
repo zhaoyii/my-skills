@@ -52,6 +52,7 @@ Claude 会自动为你创建并切换到新的 worktree。
 ### 完整工作流程
 
 1. **创建 worktree 并启动 Claude**
+
    ```bash
    claude --worktree feature-auth
    ```
@@ -115,11 +116,11 @@ git worktree add .claude/worktrees/feature -b feat/new-api
 
 打开多个终端窗口，分别进入对应的目录并启动 Claude：
 
-| 终端窗口 | 路径 | 任务 |
-|---------|------|------|
-| 窗口 1 | `project-main/` | 监控主分支，进行全局协调 |
-| 窗口 2 | `.claude/worktrees/bugfix/` | 专注修 Bug |
-| 窗口 3 | `.claude/worktrees/feature/` | 专注开发新功能 |
+| 终端窗口 | 路径                         | 任务                     |
+| -------- | ---------------------------- | ------------------------ |
+| 窗口 1   | `project-main/`              | 监控主分支，进行全局协调 |
+| 窗口 2   | `.claude/worktrees/bugfix/`  | 专注修 Bug               |
+| 窗口 3   | `.claude/worktrees/feature/` | 专注开发新功能           |
 
 ### 独立提交与合并
 
