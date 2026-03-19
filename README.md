@@ -52,3 +52,4 @@ claude mcp add -s user MiniMax --env MINIMAX_API_KEY=api_key --env MINIMAX_API_H
 - [Minimax 的 Coding Plan MCP：web_search 和 understand_image](https://platform.minimaxi.com/docs/guides/coding-plan-mcp-guide#web-search)
 - [自定义子代理](https://code.claude.com/docs/en/sub-agents#work-with-subagents)
 - [使用 Git Worktrees 运行多个并行的 Claude Code 会话](https://code.claude.com/docs/en/common-workflows#run-parallel-claude-code-sessions-with-git-worktrees)
+- [hook matcher 语法](https://code.claude.com/docs/en/hooks#matcher-patterns)
