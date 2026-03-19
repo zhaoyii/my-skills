@@ -23,13 +23,11 @@
         ]
       },
       {
-        // 匹配 Bash 工具，因为 git 命令是在 Bash 中执行的
-        "matcher": "Bash", 
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            // 脚本内部利用环境变量判断具体命令
-            "command": "if [[ \"$CLU_TOOL_ARGS\" =~ \"git commit\" ]]; then npx prettier --write \"**/*.md\"; fi"
+            "command": "bash ./scripts/pre-commit.sh"
           }
         ]
       }
