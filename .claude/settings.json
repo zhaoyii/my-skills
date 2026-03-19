@@ -9,21 +9,47 @@
       "Write(*)",
       "Edit(*)"
     ],
-    "deny": [
-      "Read(.env)",
-      "Read(.env.*)",
-      "Read(**/.env)",
-      "Read(**/.env.*)"
-    ]
+    "deny": ["Read(.env)", "Read(.env.*)", "Read(**/.env)", "Read(**/.env.*)"]
   },
   "hooks": {
-    "Notification": [
+    "PreToolUse": [
       {
-        "matcher": "",
+        "matcher": "Read",
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -Command \"[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('Claude Code needs your attention', 'Claude Code')\""
+            "command": "echo 'Claude Code is about to read a file. Please review the file content and ensure it does not contain sensitive information.'"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(git commit:*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --write \"**/*.md\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Claude Code has finished reading a file. Please review the file content that was read to ensure it does not contain sensitive information.'"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Claude Code has a new notification. Please review the notification content to ensure it does not contain sensitive information.'"
           }
         ]
       }

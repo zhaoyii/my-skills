@@ -1,36 +1,13 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(git add:*)",
-      "Bash(git commit:*)"
-    ],
+    "allow": [],
     "deny": [],
     "ask": [],
     "defaultMode": "dontAsk"
   },
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -Command \"Write-Host '[PreToolUse] running command...'\""
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -Command \"Write-Host '[PostToolUse] done'\""
-          }
-        ]
-      }
-    ]
+    "PreToolUse": [],
+    "PostToolUse": []
   },
   "enableAllProjectMcpServers": true
 }
