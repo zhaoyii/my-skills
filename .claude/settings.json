@@ -65,7 +65,9 @@
     ]
   },
   "env": {
-    "DISABLE_TELEMETRY": "1"
+    "DISABLE_TELEMETRY": "1",
+    "autoMemoryEnabled": "true",
+    "autoMemoryDirectory": "./my-custom-memory-dir"
   },
   "showTurnDuration": true
 }
