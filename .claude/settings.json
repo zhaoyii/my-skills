@@ -30,6 +30,15 @@
             "command": "bash ./scripts/pre-commit.sh"
           }
         ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ./scripts/hook-input-output.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [

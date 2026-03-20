@@ -10,6 +10,7 @@
 | [.claude/](.claude/)                           | Claude Code 配置目录                 |
 | [.claude/settings.json](.claude/settings.json) | Claude Code 配置（权限、钩子、遥测） |
 | [.claude/skills/](.claude/skills/)             | 技能定义目录                         |
+| [.claude/HOOKS_GUIDE.md](.claude/HOOKS_GUIDE.md) | Hook 配置指南                        |
 
 ## 主要特性
 
@@ -59,3 +60,4 @@ claude mcp add -s user MiniMax --env MINIMAX_API_KEY=api_key --env MINIMAX_API_H
 - [使用 Git Worktrees 运行多个并行的 Claude Code 会话](https://code.claude.com/docs/en/common-workflows#run-parallel-claude-code-sessions-with-git-worktrees)
 - [hook matcher 语法](https://code.claude.com/docs/en/hooks#matcher-patterns)
 - [hook 脚本的语法与输入参数](https://code.claude.com/docs/en/hooks-guide#block-edits-to-protected-files)
+- [hook 读取输入返回输出给 claude](https://code.claude.com/docs/en/hooks-guide#read-input-and-return-output)
