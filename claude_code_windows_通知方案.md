@@ -14,7 +14,27 @@
 
 ---
 
-## 2. 总体方案
+## 2. 环境安装
+
+在 Windows 上需要安装 PowerShell 通知模块和 jq：
+
+```powershell
+Install-Module -Name BurntToast -Force
+```
+
+```powershell
+winget install jqlang.jq
+```
+
+验证：
+
+```bash
+jq --version
+```
+
+---
+
+## 3. 总体方案
 
 整体链路如下：
 
@@ -39,11 +59,12 @@ Windows Toast Notification
 
 ---
 
-## 3. 关键实现
+## 4. 关键实现
 
 ### 3.1 Bash 脚本（notify.sh）
 
 功能：
+
 - 读取 stdin JSON
 - 提取字段
 - 构造标题和内容
@@ -114,7 +135,7 @@ New-BurntToastNotification -Text $Title, $Message
 
 ---
 
-## 4. 输入数据结构（Claude Hook）
+## 5. 输入数据结构（Claude Hook）
 
 示例：
 
@@ -129,15 +150,15 @@ New-BurntToastNotification -Text $Title, $Message
 
 字段说明：
 
-| 字段 | 用途 |
-|------|------|
-| last_assistant_message | 通知内容 |
-| cwd | 提取项目名 |
-| hook_event_name | 控制触发时机 |
+| 字段                   | 用途         |
+| ---------------------- | ------------ |
+| last_assistant_message | 通知内容     |
+| cwd                    | 提取项目名   |
+| hook_event_name        | 控制触发时机 |
 
 ---
 
-## 5. 标题生成规则
+## 6. 标题生成规则
 
 ```text
 claude：<项目名>
@@ -151,8 +172,6 @@ cwd = c:\Users\xxx\my-skills
 ```
 
 ---
-
-## 6. 使用方式
 
 ### 6.1 手动调用
 
@@ -299,4 +318,3 @@ fi
 - Webhook → 本地通知桥接
 - 通知优先级（失败优先）
 - 富通知（按钮 / 图片 / 进度条）
-
