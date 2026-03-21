@@ -1,16 +1,32 @@
-# 我的技能仓库
+# Claude Code 个人配置库
 
-个人技能文档库，记录工程原则、AI 协作指南和开发配置。
+围绕 Claude Code / OpenClaw 的 Agent 实验项目，包含配置、脚本、工程原则和最佳实践。
 
-## 文件说明
+## 目录结构
 
-| 文件/目录                                      | 说明                                 |
-| ---------------------------------------------- | ------------------------------------ |
-| [CLAUDE_BASE.md](CLAUDE_BASE.md)               | Claude Code Agent 行为基准准则       |
-| [.claude/](.claude/)                           | Claude Code 配置目录                 |
-| [.claude/settings.json](.claude/settings.json) | Claude Code 配置（权限、钩子、遥测） |
-| [.claude/skills/](.claude/skills/)             | 技能定义目录                         |
-| [.claude/HOOKS_GUIDE.md](.claude/HOOKS_GUIDE.md) | Hook 配置指南                        |
+```
+my-skills/
+├── docs/
+│   ├── getting-started/      # 入门指南
+│   ├── guides/               # 使用指南
+│   │   ├── advanced/         # 高级主题
+│   │   ├── hooks/            # Hook 配置
+│   │   └── workflow/         # 工作流
+│   └── reference/            # 参考资料
+├── scripts/                  # 脚本
+│   ├── hooks/                # Hook 脚本
+│   └── notifications/        # 通知脚本
+└── .claude/                  # Claude Code 配置
+```
+
+## 快速导航
+
+| 类别 | 内容 |
+|------|------|
+| [安装指南](docs/getting-started/installation/windows-Claude-Code-install.md) | Windows 环境配置 |
+| [Hooks 配置](docs/guides/hooks/Hooks配置指南.md) | 钩子脚本编写 |
+| [工作流](docs/guides/workflow/) | 并行开发、Worktree、VSCode 集成 |
+| [工程原则](docs/guides/advanced/Agent三定律.md) | Skills-First、Design-Before-Code |
 
 ## 主要特性
 
@@ -30,34 +46,29 @@
 
 | 日期       | 更新内容                                            |
 | ---------- | --------------------------------------------------- |
+| 2026-03-21 | chore: 重构目录架构，文档分类整理                   |
 | 2026-02-03 | feat: 添加代码审查Agent并更新权限配置               |
-| 2026-02-03 | docs: 重构并简化Agent基础元指令文档                 |
-| 2026-02-03 | chore: 将默认权限模式从auto改为default              |
-| 2026-01-29 | docs: 更新 README 为中文版本，添加 Claude Code 配置 |
-| 2026-01-29 | docs: 添加CLAUDE基础工作准则文档                    |
 
-## mcp 安装
+## 配置参考
 
-**目前最稳妥的方式是通过 CLI 安装。**
-
-```
-claude mcp add -s user MiniMax --env MINIMAX_API_KEY=api_key --env MINIMAX_API_HOST=https://api.minimaxi.com -- uvx minimax-coding-plan-mcp -y
-```
-
-## Claude Code 配置参考
-
-- [Using CLAUDE.md files: Customizing Claude Code for your codebase](https://claude.com/blog/using-claude-md-files)
-- [系统提示词（System prompt）](https://code.claude.com/docs/en/settings#system-prompt)
-- [命令行参数（CLI flags）](https://code.claude.com/docs/en/cli-reference#cli-flags)
-- [CLAUDE.md configuration 是什么](https://code.claude.com/docs/en/gitlab-ci-cd#claude-md-configuration)
-- [Claude Code settings](https://code.claude.com/docs/en/settings)
-  - [settings.json 配置](https://code.claude.com/docs/en/settings#settings-files)
-  - [Subagent configuration](https://code.claude.com/docs/en/settings#subagent-configuration)
-- [Claude Code skills](https://code.claude.com/docs/en/skills)
-- [通过 MCP 将 Claude 与工具连接起来](https://code.claude.com/docs/en/mcp)
-- [Minimax 的 Coding Plan MCP：web_search 和 understand_image](https://platform.minimaxi.com/docs/guides/coding-plan-mcp-guide#web-search)
+### 配置与权限
+- [settings.json 配置](https://code.claude.com/docs/en/settings#settings-files)
+- [Subagent configuration](https://code.claude.com/docs/en/settings#subagent-configuration)
 - [自定义子代理](https://code.claude.com/docs/en/sub-agents#work-with-subagents)
-- [使用 Git Worktrees 运行多个并行的 Claude Code 会话](https://code.claude.com/docs/en/common-workflows#run-parallel-claude-code-sessions-with-git-worktrees)
+
+### Hooks
 - [hook matcher 语法](https://code.claude.com/docs/en/hooks#matcher-patterns)
 - [hook 脚本的语法与输入参数](https://code.claude.com/docs/en/hooks-guide#block-edits-to-protected-files)
 - [hook 读取输入返回输出给 claude](https://code.claude.com/docs/en/hooks-guide#read-input-and-return-output)
+
+### 工作流
+- [使用 Git Worktrees 运行多个并行的 Claude Code 会话](https://code.claude.com/docs/en/common-workflows#run-parallel-claude-code-sessions-with-git-worktrees)
+
+### MCP
+- [通过 MCP 将 Claude 与工具连接起来](https://code.claude.com/docs/en/mcp)
+- [Claude Code skills](https://code.claude.com/docs/en/skills)
+
+### 其他
+- [Using CLAUDE.md files](https://claude.com/blog/using-claude-md-files)
+- [系统提示词（System prompt）](https://code.claude.com/docs/en/settings#system-prompt)
+- [命令行参数（CLI flags）](https://code.claude.com/docs/en/cli-reference#cli-flags)
