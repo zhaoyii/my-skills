@@ -1,15 +1,55 @@
 {
   "permissions": {
     "defaultMode": "default",
+
     "allow": [
-      "Bash(git *)",
+      "Read(config/schema/**)",
+      "Read(config/example/**)",
+      "Read(config/dev/**)",
+
+      "Read(*.md)",
+      "Read(src/**)",
+
+      "Write(src/**)",
+      "Edit(src/**)",
+
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+
       "Bash(pnpm run dev)",
-      "Bash(curl *)",
-      "Read(*)",
-      "Write(*)",
-      "Edit(*)"
+      "Bash(pnpm test *)"
     ],
-    "deny": ["Read(.env)", "Read(.env.*)", "Read(**/.env)", "Read(**/.env.*)"]
+
+    "ask": ["Bash(git push *)"],
+
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+
+      "Read(config/prod/**)",
+      "Read(config/secrets/**)",
+      "Read(secrets/**)",
+
+      "Read(*secret*)",
+      "Read(*password*)",
+
+      "Bash(*.env*)",
+      "Bash(cat *.env*)",
+      "Bash(grep *.env*)",
+      "Bash(printenv*)",
+
+      "Bash(curl *)",
+      "Bash(wget *)",
+
+      "Bash(rm -rf *)",
+      "Bash(git reset *)",
+      "Bash(git clean *)"
+    ]
   },
   "hooks": {
     "Stop": [
@@ -17,7 +57,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ./scripts/notify.sh"
+            "command": "bash ./scripts/notifications/notify.sh"
           }
         ]
       }

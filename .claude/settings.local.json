@@ -1,13 +1,4 @@
 {
-  "permissions": {
-    "allow": [],
-    "deny": [],
-    "ask": [],
-    "defaultMode": "dontAsk"
-  },
-  "hooks": {
-    "PreToolUse": [],
-    "PostToolUse": []
-  },
-  "enableAllProjectMcpServers": true
+  "permissions": {},
+  "hooks": {}
 }
