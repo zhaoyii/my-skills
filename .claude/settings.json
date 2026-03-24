@@ -2,41 +2,23 @@
   "permissions": {
     "defaultMode": "default",
 
-    "allow": [
-      "Read(config/schema/**)",
-      "Read(config/example/**)",
-      "Read(config/dev/**)",
-
-      "Read(*.md)",
-      "Read(src/**)",
-
-      "Write(src/**)",
-      "Edit(src/**)",
-
-      "Bash(git status *)",
-      "Bash(git diff *)",
-      "Bash(git log *)",
-      "Bash(git add *)",
-      "Bash(git commit *)",
-
-      "Bash(pnpm run dev)",
-      "Bash(pnpm test *)"
-    ],
-
-    "ask": ["Bash(git push *)"],
-
     "deny": [
       "Read(.env)",
-      "Read(.env.*)",
+      "Read(.env?)",
       "Read(**/.env)",
-      "Read(**/.env.*)",
+      "Read(**/.env.local)",
+
+      "Read(*secret*)",
+      "Read(*password*)",
+      "Read(*.key)",
+      "Read(*.pem)",
+      "Read(*.crt)",
+      "Read(*.p12)",
+      "Read(*.pfx)",
 
       "Read(config/prod/**)",
       "Read(config/secrets/**)",
       "Read(secrets/**)",
-
-      "Read(*secret*)",
-      "Read(*password*)",
 
       "Bash(*.env*)",
       "Bash(cat *.env*)",
@@ -47,9 +29,18 @@
       "Bash(wget *)",
 
       "Bash(rm -rf *)",
-      "Bash(git reset *)",
-      "Bash(git clean *)"
-    ]
+      "Bash(rm -r *)",
+      "Bash(rm -f *)",
+      "Bash(rm -d *)",
+      "Bash(rm *)",
+
+      "Bash(git reset --hard *)",
+      "Bash(git reset --mixed *)",
+      "Bash(git clean -fd *)",
+      "Bash(git checkout -- *)"
+    ],
+    "allow": ["Read(*)", "Write(*)", "Edit(*)", "Bash(*)"],
+    "ask": ["Bash(sudo *)"]
   },
   "hooks": {
     "Stop": [
@@ -114,10 +105,12 @@
       }
     ]
   },
+
   "env": {
     "DISABLE_TELEMETRY": "1",
     "autoMemoryEnabled": "true",
     "autoMemoryDirectory": "./my-custom-memory-dir"
   },
+
   "showTurnDuration": true
 }
