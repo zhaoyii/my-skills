@@ -20,10 +20,11 @@
       "Read(config/secrets/**)",
       "Read(secrets/**)",
 
-      "Bash(*.env*)",
-      "Bash(cat *.env*)",
-      "Bash(grep *.env*)",
-      "Bash(printenv*)",
+      "Bash(cat .env)",
+      "Bash(cat **/.env)",
+      "Bash(grep .env)",
+      "Bash(grep **/.env)",
+      "Bash(printenv)",
 
       "Bash(curl *)",
       "Bash(wget *)",
