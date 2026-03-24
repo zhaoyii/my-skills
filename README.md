@@ -52,6 +52,7 @@ my-skills/
 ## 配置参考
 
 ### 配置与权限
+- [命令分类与权限控制模型](docs/reference/claude-code-commands.md) - 内置命令的五类抽象与权限配置
 - [settings.json 配置](https://code.claude.com/docs/en/settings#settings-files)
 - [Subagent configuration](https://code.claude.com/docs/en/settings#subagent-configuration)
 - [自定义子代理](https://code.claude.com/docs/en/sub-agents#work-with-subagents)
