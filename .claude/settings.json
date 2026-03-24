@@ -26,22 +26,13 @@
       "Bash(grep **/.env)",
       "Bash(printenv)",
 
-      "Bash(curl *)",
-      "Bash(wget *)",
-
-      "Bash(rm -rf *)",
-      "Bash(rm -r *)",
-      "Bash(rm -f *)",
-      "Bash(rm -d *)",
-      "Bash(rm *)",
-
       "Bash(git reset --hard *)",
       "Bash(git reset --mixed *)",
       "Bash(git clean -fd *)",
       "Bash(git checkout -- *)"
     ],
     "allow": ["Read(*)", "Write(*)", "Edit(*)", "Bash(*)"],
-    "ask": ["Bash(sudo *)"]
+    "ask": ["Bash(sudo *)", "Bash(rm *)", "Bash(curl *)", "Bash(wget *)"]
   },
   "hooks": {
     "Stop": [
