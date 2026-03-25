@@ -31,7 +31,7 @@
       "Bash(git clean -fd *)",
       "Bash(git checkout -- *)"
     ],
-    "allow": ["Read(*)", "Write(*)", "Edit(*)", "Bash(*)"],
+    "allow": ["Read(*)", "Write(*)", "Edit(*)", "Update(*)", "Bash(*)"],
     "ask": ["Bash(sudo *)", "Bash(rm *)", "Bash(curl *)", "Bash(wget *)"]
   },
   "hooks": {
