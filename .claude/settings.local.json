@@ -1,4 +1,6 @@
 {
-  "permissions": {},
+  "permissions": {
+     "defaultMode": "bypassPermissions"
+  },
   "hooks": {}
 }
