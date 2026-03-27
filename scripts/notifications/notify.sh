@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
-
+#
+# notify.sh — Windows 通知脚本（支持 Git Bash / WSL2 / MSYS）
+#
+# 用法：
+#   ./notify.sh "标题" "内容"                    # 直接调用
+#   cat json | ./notify.sh                      # 接收 Claude hook JSON 输入
+#
+# 支持环境：
+#   - Git Bash / Cygwin：自动调用 PowerShell 发送通知
+#   - WSL2：自动转换路径后调用 PowerShell
+#   - MSYS：直接调用 PowerShell
+#
+# 依赖：jq（Windows: winget install jqlang.jq）
+#
+# Claude Code Hook 配置示例（settings.json）：
+#   "hooks": {
+#     "Notify": "bash /path/to/scripts/notifications/notify.sh"
+#   }
+#
+# 自定义图标：修改 ICON_REL 变量指向对应图片路径
+#
 set -euo pipefail
 
 if ! command -v jq >/dev/null 2>&1; then
@@ -114,9 +134,39 @@ case "$ENV" in
 esac
 
 # =========================
+# 图标路径（WSL2 转 Windows 路径）
+# =========================
+ICON_REL="dog.png"
+ICON_PATH="$SCRIPT_DIR/$ICON_REL"
+
+# 图标路径转换（各环境各自处理）
+case "$ENV" in
+  wsl)
+    ICON_WIN=$(wslpath -w "$ICON_PATH" 2>/dev/null || echo "")
+    ;;
+  cygwin)
+    ICON_WIN=$(cygpath -w "$ICON_PATH" 2>/dev/null || echo "")
+    ;;
+  msys)
+    ICON_WIN="$ICON_PATH"
+    ;;
+  *)
+    ICON_WIN=""
+    ;;
+esac
+
+# =========================
 # 调用 PowerShell
 # =========================
-powershell.exe -NoProfile -ExecutionPolicy Bypass \
-  -File "$PS_SCRIPT" \
-  -Title "$TITLE_ESC" \
-  -Message "$MESSAGE_ESC"
+if [ -n "$ICON_WIN" ] && [ -f "$ICON_PATH" ]; then
+  powershell.exe -NoProfile -ExecutionPolicy Bypass \
+    -File "$PS_SCRIPT" \
+    -Title "$TITLE_ESC" \
+    -Message "$MESSAGE_ESC" \
+    -Icon "$ICON_WIN"
+else
+  powershell.exe -NoProfile -ExecutionPolicy Bypass \
+    -File "$PS_SCRIPT" \
+    -Title "$TITLE_ESC" \
+    -Message "$MESSAGE_ESC"
+fi

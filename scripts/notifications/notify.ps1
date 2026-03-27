@@ -3,7 +3,10 @@ param(
     [string]$Title = "通知",
 
     [Parameter(Mandatory=$false)]
-    [string]$Message = "内容"
+    [string]$Message = "内容",
+
+    [Parameter(Mandatory=$false)]
+    [string]$Icon = ""
 )
 
 # 强制 UTF-8（避免中文乱码）
@@ -23,4 +26,8 @@ if (-not (Get-Module -ListAvailable -Name BurntToast)) {
 Import-Module BurntToast
 
 # 发送通知
-New-BurntToastNotification -Text $Title, $Message
+if ($Icon -and (Test-Path $Icon)) {
+    New-BurntToastNotification -Text $Title, $Message -AppLogo $Icon
+} else {
+    New-BurntToastNotification -Text $Title, $Message
+}
