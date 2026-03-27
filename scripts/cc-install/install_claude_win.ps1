@@ -1,6 +1,12 @@
-# ==========================================
+﻿# ==========================================
 # Claude Code Windows 一键安装脚本 (10808 代理版)
 # ==========================================
+
+# 0. 设置控制台编码为 UTF-8（解决中文乱码）- 必须放最前面
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::InputEncoding = [System.Text.Encoding]::UTF8
+$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
+chcp 65001 > $null
 
 # 1. 设置当前会话代理（匹配你的 10808 端口）
 $proxy = "http://127.0.0.1:10808"
@@ -14,15 +20,17 @@ Write-Host "已设置代理为: $proxy" -ForegroundColor Cyan
 
 # 3. 绕过 SSL 证书验证错误 (核心：解决之前的 certificate verification error)
 Write-Host "正在配置临时证书绕过策略..." -ForegroundColor Yellow
-add-type @"
-    using System.Net;
-    using System.Security.Cryptography.X509Certificates;
-    public class TrustAllCertsPolicy : ICertificatePolicy {
-        public bool CheckValidationResult(ServicePoint srvPoint, X509Certificate certificate, WebRequest request, int certificateProblem) {
-            return true;
+if (-not ([System.Management.Automation.PSTypeName]'TrustAllCertsPolicy').Type) {
+    add-type @"
+        using System.Net;
+        using System.Security.Cryptography.X509Certificates;
+        public class TrustAllCertsPolicy : ICertificatePolicy {
+            public bool CheckValidationResult(ServicePoint srvPoint, X509Certificate certificate, WebRequest request, int certificateProblem) {
+                return true;
+            }
         }
-    }
 "@
+}
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
 # 4. 执行官方安装脚本
