@@ -74,10 +74,44 @@ TITLE_ESC=$(printf '%s' "$TITLE" | sed 's/"/\\"/g')
 MESSAGE_ESC=$(printf '%s' "$MESSAGE" | sed 's/"/\\"/g')
 
 # =========================
-# 定位 PowerShell 脚本
+# 定位 PowerShell 脚本 + 路径转换
 # =========================
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PS_SCRIPT=$(cygpath -w "$SCRIPT_DIR/notify.ps1")
+
+# 检测运行环境：WSL2 / Cygwin(Git Bash) / MSYS / 普通 Linux
+detect_environment() {
+  if grep -qi 'microsoft\|wsl' /proc/version 2>/dev/null; then
+    echo "wsl"
+  elif command -v cygpath >/dev/null 2>&1; then
+    echo "cygwin"
+  elif command -v msys_path >/dev/null 2>&1; then
+    echo "msys"
+  else
+    echo "linux"
+  fi
+}
+
+ENV=$(detect_environment)
+
+case "$ENV" in
+  wsl)
+    # WSL2：使用 wslpath 转换路径
+    WIN_SCRIPT_DIR=$(wslpath -w "$SCRIPT_DIR")
+    PS_SCRIPT="$WIN_SCRIPT_DIR\\notify.ps1"
+    ;;
+  cygwin)
+    # Git Bash / Cygwin：使用 cygpath 转换路径
+    PS_SCRIPT=$(cygpath -w "$SCRIPT_DIR/notify.ps1")
+    ;;
+  msys)
+    # MSYS：使用原生路径
+    PS_SCRIPT="$SCRIPT_DIR/notify.ps1"
+    ;;
+  linux)
+    echo "错误：当前环境不支持直接调用 PowerShell，请使用 WSL2 或安装 PowerShell" >&2
+    exit 1
+    ;;
+esac
 
 # =========================
 # 调用 PowerShell
