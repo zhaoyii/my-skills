@@ -61,6 +61,7 @@ my-skills/
 - [hook matcher 语法](https://code.claude.com/docs/en/hooks#matcher-patterns)
 - [hook 脚本的语法与输入参数](https://code.claude.com/docs/en/hooks-guide#block-edits-to-protected-files)
 - [hook 读取输入返回输出给 claude](https://code.claude.com/docs/en/hooks-guide#read-input-and-return-output)
+- [可复用的 hooks 存放目录`.claude/hooks`](https://code.claude.com/docs/en/hooks-guide#block-edits-to-protected-files)
 
 ### 工作流
 - [使用 Git Worktrees 运行多个并行的 Claude Code 会话](https://code.claude.com/docs/en/common-workflows#run-parallel-claude-code-sessions-with-git-worktrees)
