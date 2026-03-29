@@ -20,7 +20,7 @@
 #
 # 自定义图标：修改 ICON_REL 变量指向对应图片路径
 #
-set -euo pipefail
+set -e
 
 if ! command -v jq >/dev/null 2>&1; then
   echo "错误：未安装 jq，请先安装 jq，命令：winget install jqlang.jq" >&2

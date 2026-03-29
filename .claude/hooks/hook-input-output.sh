@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 参见 https://code.claude.com/docs/en/hooks-guide#read-input-and-return-output
 
