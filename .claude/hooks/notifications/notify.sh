@@ -66,7 +66,7 @@ if [ -n "$INPUT" ]; then
       ;;
 
     "Stop")
-      TITLE="会话已结束"
+      TITLE="$PROJECT：会话已结束"
       LAST_MSG=$(echo "$INPUT" | jq -r '.last_assistant_message // ""')
       STOP_REASON=$(echo "$INPUT" | jq -r '.stop_reason // ""')
       if [ -n "$STOP_REASON" ] && [ "$STOP_REASON" != "null" ]; then

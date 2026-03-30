@@ -74,3 +74,6 @@ my-skills/
 - [Using CLAUDE.md files](https://claude.com/blog/using-claude-md-files)
 - [系统提示词（System prompt）](https://code.claude.com/docs/en/settings#system-prompt)
 - [命令行参数（CLI flags）](https://code.claude.com/docs/en/cli-reference#cli-flags)
+
+### 记忆
+- [CLAUDE.md 记忆](https://code.claude.com/docs/en/memory#claude-md-vs-auto-memory)
