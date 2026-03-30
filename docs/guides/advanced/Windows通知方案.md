@@ -19,7 +19,11 @@
 在 Windows 上需要安装 PowerShell 通知模块和 jq：
 
 ```powershell
-Install-Module -Name BurntToast -Force
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+Install-PackageProvider -Name NuGet -Force
 ```
 
 ```powershell
