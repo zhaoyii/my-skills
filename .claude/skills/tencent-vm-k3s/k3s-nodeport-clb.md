@@ -140,9 +140,19 @@ kubectl get pods -n kube-system -l app.kubernetes.io/name=traefik
    - 443 监听器：填写 `31080`（CLB 已卸载 SSL，转发到节点走 HTTP 即可）
 3. **权重**：全部设为默认的 10
 
-## 5. 步骤三：健康检查与安全组优化
+## **5. 步骤四：健康检查与安全组优化**
 
-### 4.1 健康检查配置
+### **4.1 externalTrafficPolicy: Cluster 请求流程**
+
+1. **外部请求** → 任意节点 NodePort（如 Node1:31080）。
+2. **若 Node1 无 Traefik Pod**：流量经 SNAT（源 IP 变为 Node1 IP）跨节点转发至有 Pod 的 Node2。
+3. **Traefik Pod 接收**：日志中可见源 IP 为 Node1 IP（或 LB 传递的 X-Forwarded-For 头部保留真实 IP）。
+4. **Traefik 反向代理** → 根据 Ingress 规则，可能再次跨节点转发至后端应用 Pod。
+5. **回包原路返回。**
+
+**核心结论**：跨节点跳转对延迟影响可忽略；真实 IP 依赖七层 LB 头部注入。
+
+### **4.2 健康检查配置**
 
 建议使用默认的 `externalTrafficPolicy: Cluster`（或显式设置），原因：
 
@@ -154,7 +164,7 @@ kubectl get pods -n kube-system -l app.kubernetes.io/name=traefik
 
 - **建议检查路径**：`/ping`（Traefik 标准健康检查路径）
 
-### 4.2 安全组加固
+### **4.3 安全组加固**
 
 为了安全，不要对公网放行 31080。
 
@@ -164,7 +174,7 @@ kubectl get pods -n kube-system -l app.kubernetes.io/name=traefik
 
 访问 TCP 端口 31080。
 
-## 6. 如何手动增加新服务器？
+## **6. 如何手动增加新服务器？**
 
 当你扩容了一个新的 k3s Agent 节点时，只需两步：
 
@@ -174,7 +184,7 @@ kubectl get pods -n kube-system -l app.kubernetes.io/name=traefik
    - 在 80 和 443 的后端服务器列表里，点击绑定
    - 选中新节点的 IP，端口填入 `31080`，保存
 
-## 7. 总结：优化后的 Ingress 示例
+## **7. 总结：优化后的 Ingress 示例**
 
 配置完成后，你的业务 Ingress 只需要处理逻辑路由即可：
 
