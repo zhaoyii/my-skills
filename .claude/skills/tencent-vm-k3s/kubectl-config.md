@@ -148,10 +148,10 @@ sudo systemctl status k3s
 **永久生效方式**：安装时直接指定：
 
 ```bash
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | \
-  INSTALL_K3S_MIRROR=cn \
-  INSTALL_K3S_SKIP_SELINUX_RPM=true \
-  sh -s - \
+export INSTALL_K3S_MIRROR=cn
+export INSTALL_K3S_SKIP_SELINUX_RPM=true
+
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | sh -s - \
   --write-kubeconfig-mode 644 \
   --node-name master-01 \
   --tls-san 43.139.62.59      # 添加公网 IP
