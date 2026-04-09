@@ -38,10 +38,21 @@ kubectl get ingress demo-nginx-ingress
 
 ### 3. 访问测试
 
+#### 方式 A：NodePort 直连（内网测试，绕过备案）
+
 ```bash
-curl http://<ingress-地址>
+# 在任意能访问 k3s 节点内网 IP 的机器上执行
+curl -H "Host: www.luojialbs.com" http://<节点内网IP>:31080/
 # 例如
-curl http://demo.local
+curl -H "Host: www.luojialbs.com" http://172.16.24.9:31080/
+```
+
+#### 方式 B：CLB 公网（需域名已备案）
+
+```bash
+curl -H "Host: www.luojialbs.com" http://<CLB公网IP>/
+# 例如
+curl -H "Host: www.luojialbs.com" http://43.144.78.250/
 ```
 
 看到 Nginx 页面说明链路打通。
@@ -104,8 +115,8 @@ curl -I https://mirror.ccs.tencentyun.com/v2/rancher/mirrored-pause/manifests/3.
 
 ## 资源说明
 
-| 资源       | 名称               | 说明                    |
-| ---------- | ------------------ | ----------------------- |
-| Deployment | demo-nginx         | 2 副本 Nginx            |
-| Service    | demo-nginx-service | ClusterIP 类型，端口 80 |
-| Ingress    | demo-nginx-ingress | 域名 demo.local         |
+| 资源 | 名称 | 说明 |
+|------|------|------|
+| Deployment | demo-nginx | 2 副本 Nginx |
+| Service | demo-nginx-service | ClusterIP 类型，端口 80 |
+| Ingress | demo-nginx-ingress | 域名 demo.local |
