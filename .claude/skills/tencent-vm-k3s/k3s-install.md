@@ -9,21 +9,21 @@ description: 基于 Master 节点"完整安装"经验，整理的标准化的腾
 
 ### 1. 部署环境与前提条件
 
-| 项目 | 说明 |
-|------|------|
-| 操作系统 | TencentOS Server 4 (基于 RHEL 9) |
-| 服务器配置 | 4 台腾讯云 CVM/轻量服务器 |
-| 网络 | 所有服务器处于同一 VPC（私有网络）下 |
-| 权限 | 具备 root 或 sudo 权限 |
+| 项目       | 说明                                 |
+| ---------- | ------------------------------------ |
+| 操作系统   | TencentOS Server 4 (基于 RHEL 9)     |
+| 服务器配置 | 4 台腾讯云 CVM/轻量服务器            |
+| 网络       | 所有服务器处于同一 VPC（私有网络）下 |
+| 权限       | 具备 root 或 sudo 权限               |
 
 **机器角色规划**
 
-| 主机名 | 内网 IP (示例) | 角色 | 核心任务 |
-|--------|---------------|------|----------|
-| master-01 | 10.0.0.5 | Master (Control Plane) | 管理节点、API Server、调度 |
-| worker-01 | 10.0.0.6 | Agent (Worker) | 运行业务容器 |
-| worker-02 | 10.0.0.7 | Agent (Worker) | 运行业务容器 |
-| worker-03 | 10.0.0.8 | Agent (Worker) | 运行业务容器 |
+| 主机名    | 内网 IP (示例) | 角色                   | 核心任务                   |
+| --------- | -------------- | ---------------------- | -------------------------- |
+| master-01 | 10.0.0.5       | Master (Control Plane) | 管理节点、API Server、调度 |
+| worker-01 | 10.0.0.6       | Agent (Worker)         | 运行业务容器               |
+| worker-02 | 10.0.0.7       | Agent (Worker)         | 运行业务容器               |
+| worker-03 | 10.0.0.8       | Agent (Worker)         | 运行业务容器               |
 
 ---
 
@@ -35,18 +35,18 @@ description: 基于 Master 节点"完整安装"经验，整理的标准化的腾
 
 核心建议：**全放通**
 
-| 规则 | 说明 |
-|------|------|
+| 规则                                | 说明                                                                       |
+| ----------------------------------- | -------------------------------------------------------------------------- |
 | 协议 ALL, 目标 0.0.0.0/0, 策略 允许 | 确保服务器能正常访问腾讯云镜像源、同步 NTP 时间以及下载 K3s 核心二进制文件 |
 
 **入站规则 (Inbound)**
 
-| 协议 | 端口 | 来源 | 策略 | 说明 |
-|------|------|------|------|------|
-| ALL | - | 当前安全组 ID | 允许 | 让同一安全组内的 4 台机器之间可以自由通信，不受端口限制，确保 K3s 集群内部网络流量（如 6443 API Server、8472 VXLAN 等）正常工作 |
-| TCP | 6443 | 你的办公/家庭固定 IP | 允许 | 允许远程通过 kubectl 管理集群 |
-| TCP | 80/443 | 0.0.0.0/0 | 允许 | 允许公网访问你部署的 Web 业务 |
-| TCP | 22 | 你的管理 IP | 允许 | SSH 远程登录 |
+| 协议 | 端口   | 来源                 | 策略 | 说明                                                                                                                            |
+| ---- | ------ | -------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------- |
+| ALL  | -      | 当前安全组 ID        | 允许 | 让同一安全组内的 4 台机器之间可以自由通信，不受端口限制，确保 K3s 集群内部网络流量（如 6443 API Server、8472 VXLAN 等）正常工作 |
+| TCP  | 6443   | 你的办公/家庭固定 IP | 允许 | 允许远程通过 kubectl 管理集群                                                                                                   |
+| TCP  | 80/443 | 0.0.0.0/0            | 允许 | 允许公网访问你部署的 Web 业务                                                                                                   |
+| TCP  | 22     | 你的管理 IP          | 允许 | SSH 远程登录                                                                                                                    |
 
 ---
 
@@ -76,15 +76,18 @@ sudo systemctl disable firewalld --now
 
 ### 4. 集群部署
 
+**注意：国内环境需要先离线安装 [k3s-selinux](k3s-selinux_offline_install.md)**
+
 #### 4.1 部署 Master 节点
 
 在 master-01 上执行，跳过 selinux rpm 安装（`rpm.rancher.io` 国内部分网络不通）：
 
 ```bash
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | \
-  INSTALL_K3S_MIRROR=cn \
-  INSTALL_K3S_SKIP_SELINUX_RPM=true \
-  sh -s - \
+export INSTALL_K3S_MIRROR=cn
+export INSTALL_K3S_SKIP_SELINUX_RPM=true
+
+# 主节点 （server/master）
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | sh -s - \
   --write-kubeconfig-mode 644 \
   --node-name master-01
 ```
@@ -101,55 +104,15 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 在 3 台 worker 机器上分别执行（替换 IP 和 Token）：
 
 ```bash
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | \
-  INSTALL_K3S_MIRROR=cn \
-  INSTALL_K3S_SKIP_SELINUX_RPM=true \
-  K3S_URL=https://<MASTER_内网_IP>:6443 \
-  K3S_TOKEN=<MASTER_TOKEN> \
-  sh -s - \
-  --node-name worker-01  # 对应修改为 01, 02, 03
+export INSTALL_K3S_MIRROR=cn
+export INSTALL_K3S_SKIP_SELINUX_RPM=true
+export K3S_URL=https://<MASTER_内网_IP>:6443
+export K3S_TOKEN=<MASTER_TOKEN> 
+
+# 脚本含义：下载 K3s 安装脚本 → 通过管道执行 → 传入后续参数
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | sh -s - \
+  --node-name agent-01 
 ```
-
-#### 4.3 补装 k3s-selinux（所有节点执行）
-
-**报错原因**
-
-不跳过时会遇到如下错误：
-
-```
-[WARN]  Failed to get available versions of k3s-selinux..defaulting to k3s-selinux-1.2-2.el9.noarch.rpm
-Error: Failed to download metadata for repo 'rancher-k3s-common-stable': Cannot download repomd.xml
-```
-
-原因：`INSTALL_K3S_MIRROR=cn` 只影响 k3s 二进制下载，selinux rpm 走 `rpm.rancher.io`（国内部分网络超时），且脚本默认 fallback 到旧版本 `1.2-2`（已下架）。
-
-**解决方案**：跳过安装后，从 GitHub 手动下载上传安装。
-
-```bash
-# 1. 在能联网的机器上下载（最新版本 v1.6.latest.1）
-# TencentOS 4 基于 RHEL 9，选 el9 版本
-wget https://github.com/k3s-io/k3s-selinux/releases/download/v1.6.latest.1/k3s-selinux-1.6-1.el9.noarch.rpm -O /tmp/k3s-selinux.rpm
-
-# 2. 传到所有节点（Master 和 Worker）
-scp /tmp/k3s-selinux.rpm root@master-01:/tmp/
-scp /tmp/k3s-selinux.rpm root@worker-01:/tmp/
-scp /tmp/k3s-selinux.rpm root@worker-02:/tmp/
-scp /tmp/k3s-selinux.rpm root@worker-03:/tmp/
-
-# 3. 所有节点执行安装
-sudo rpm -ivh /tmp/k3s-selinux.rpm
-```
-
-**常见问题**
-
-| 问题 | 原因 | 处理 |
-|------|------|------|
-| `Failed to connect to github.com` | GitHub 被墙 / 网络不可达 | 从其他节点中转、找代理、或使用镜像站 |
-| `Connection timed out` | 防火墙阻断 / DNS 污染 | 更换网络或使用国内代理 |
-| `wget: command not found` | 系统未安装 wget | `sudo yum install -y wget` |
-| `403 Forbidden` | 直接下载需科学上网 | 使用代理或中转下载 |
-
----
 
 ### 5. 验证与后期配置
 
