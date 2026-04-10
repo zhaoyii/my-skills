@@ -64,11 +64,20 @@ ssh iot-server
 
 在本地 Claude 窗口中，使用别名指挥远程服务器操作。
 
-| 场景 | 示例命令 |
-|------|----------|
-| 巡检 | SSH 到 iot-server 查一下内存占用和僵尸进程 |
-| 部署 | 把当前目录下的 main.go 部署到 iot-server 的 /root/app 目录下并重启服务 |
-| 监控 | 在 iot-server 上执行 tail -f /var/log/syslog，分析是否有关于 WiFi 定位的异常 |
+**巡检** - 查看磁盘和内存使用情况
+```bash
+ssh iot-server 'df -h && free -h'
+```
+
+**部署** - 复制文件到远程并重启服务
+```bash
+scp ./app iot-server:/opt/app/ && ssh iot-server 'systemctl restart app'
+```
+
+**监控** - 实时查看错误日志
+```bash
+ssh iot-server 'tail -f /var/log/syslog | grep ERROR'
+```
 
 ## 设计原则
 
